@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format2.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
-<package format="2">
+<package format="3">
   <name>rclcpp_components</name>
-  <version>0.8.3</version>
-  <description>Package containing tools for dynamically loadable components</description>
+  <version>6.6.6</version>
+  <description>Package containing tools for dynamically loadable components, modified to support batch loading and unloading</description>
   <maintainer email="michael@openrobotics.org">Michael Carroll</maintainer>
   <license>Apache License 2.0</license>
 
@@ -25,6 +25,8 @@
   <test_depend>ament_lint_common</test_depend>
   <test_depend>launch_testing</test_depend>
   <test_depend>std_msgs</test_depend>
+
+  <member_of_group>rosidl_interface_packages</member_of_group>
 
   <export>
     <build_type>ament_cmake</build_type>

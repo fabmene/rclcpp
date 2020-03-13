@@ -16,14 +16,27 @@ find_package(class_loader REQUIRED)
 find_package(composition_interfaces REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rcpputils REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
 
 include_directories(include)
+
+# Service file name MUST be upper camel case
+rosidl_generate_interfaces(${PROJECT_NAME}
+  
+  "srv/LoadNodes.srv"
+  "srv/UnloadNodes.srv"
+  "msg/NodeDescription.msg" DEPENDENCIES composition_interfaces
+)
 
 add_library(
   component_manager
   STATIC
   src/component_manager.cpp
 )
+rosidl_target_interfaces(component_manager
+  ${PROJECT_NAME} "rosidl_typesupport_cpp"
+)
+
 ament_target_dependencies(component_manager
   "ament_index_cpp"
   "class_loader"
@@ -36,10 +49,19 @@ add_executable(
   component_container
   src/component_container.cpp
 )
+
+rosidl_target_interfaces(component_container
+  ${PROJECT_NAME} "rosidl_typesupport_cpp"
+)
+
+
 target_link_libraries(component_container component_manager)
+
 ament_target_dependencies(component_container
   "rclcpp"
 )
+
+
 
 set(node_main_template_install_dir "share/${PROJECT_NAME}")
 install(FILES
@@ -50,6 +72,10 @@ add_executable(
   component_container_mt
   src/component_container_mt.cpp
 )
+rosidl_target_interfaces(component_container_mt
+  ${PROJECT_NAME} "rosidl_typesupport_cpp"
+)
+
 target_link_libraries(component_container_mt component_manager)
 ament_target_dependencies(component_container_mt
   "rclcpp"
