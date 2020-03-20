@@ -1,5 +1,5 @@
 rclcpp_components/NodeDescription[] node_descriptions
 ---
 bool[] results
-int64[] unique_ids
+uint64[] unique_ids
 string[] names

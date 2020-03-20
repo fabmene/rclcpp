@@ -33,24 +33,24 @@ ComponentManager::ComponentManager(std::weak_ptr<rclcpp::executor::Executor> exe
     : Node("ComponentManager"), executor_(executor)
 {
 
-  auto qos = rmw_qos_profile_services_default;
+  // auto qos = rmw_qos_profile_services_default;
   // qos.depth = 1;
   // qos.durability = RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL;
   loadNode_srv_ = create_service<LoadNode>(
-      "~/_container/load_node", std::bind(&ComponentManager::OnLoadNode, this, _1, _2, _3), qos);
+      "~/_container/load_node", std::bind(&ComponentManager::OnLoadNode, this, _1, _2, _3));
   unloadNode_srv_ =
       create_service<UnloadNode>("~/_container/unload_node",
-                                 std::bind(&ComponentManager::OnUnloadNode, this, _1, _2, _3), qos);
+                                 std::bind(&ComponentManager::OnUnloadNode, this, _1, _2, _3));
   listNodes_srv_ = create_service<ListNodes>(
-      "~/_container/list_nodes", std::bind(&ComponentManager::OnListNodes, this, _1, _2, _3), qos);
+      "~/_container/list_nodes", std::bind(&ComponentManager::OnListNodes, this, _1, _2, _3));
 
   loadNodeArray_srv_ = create_service<rclcpp_components::srv::LoadNodes>(
       "~/_container/load_node_array",
-      std::bind(&ComponentManager::OnLoadNodeArray, this, _1, _2, _3), qos);
+      std::bind(&ComponentManager::OnLoadNodeArray, this, _1, _2, _3));
 
   unloadNodeArray_srv_ = create_service<rclcpp_components::srv::UnloadNodes>(
       "~/_container/unload_node_array",
-      std::bind(&ComponentManager::OnUnloadNodeArray, this, _1, _2, _3), qos);
+      std::bind(&ComponentManager::OnUnloadNodeArray, this, _1, _2, _3));
 }
 
 ComponentManager::~ComponentManager()
